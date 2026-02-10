@@ -1,0 +1,62 @@
+python -m app.main
+
+
+---------------------------------
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+---------------------------------
+deactivate
+rm -Recurse -Force .\.venv\
+---------------------------------
+pip list --verbose | findstr "Location"
+
+mkdir -p app/presentation/telegram/handlers
+mkdir -p app/domain/entities
+mkdir -p app/infrastructure/database
+
+mkdir -Force configs/prompts; "system_prompt: ''" | Out-File -FilePath configs/prompts/ielts.yaml, configs/prompts/toefl.yaml, configs/prompts/pte.yaml -Encoding utf8
+
+
+mkdir -Force configs/prompts; "system_prompt: ''" | Out-File -FilePath configs/prompts/ielts.yaml, configs/prompts/toefl.yaml, configs/prompts/pte.yaml -Encoding utf8
+
+ls -Recurse configs
+-----------------------------------
+# Run the bot
+python -m app.main
+
+# Check logs
+tail -f logs/bot.log
+
+# Test database
+python -c "
+import asyncio
+from app.infrastructure.database.database import AsyncSessionLocal
+from app.infrastructure.database.repositories import UserRepository
+
+async def test():
+    async with AsyncSessionLocal() as session:
+        repo = UserRepository(session)
+        user = await repo.get_user(123)
+        print(f'User: {user}')
+
+asyncio.run(test())
+"
+
+-------------------------------
+Webhook در main.py فعال شود
+
+برای توسعه بیشتر:
+
+اضافه کردن مهارت‌های Reading/Listening
+
+اضافه کردن آزمون‌های بیشتر
+
+اضافه کردن سیستم پرداخت
+
+اضافه کردن admin panel
+
+اضافه کردن analytics
+
+
+

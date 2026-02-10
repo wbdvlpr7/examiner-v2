@@ -1,0 +1,17 @@
+[build]
+builder = "NIXPACKS"
+buildCommand = "pip install -r requirements.txt"
+
+[deploy]
+startCommand = "python main.py"
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+restartPolicyType = "ALWAYS"
+restartPolicyMaxRetries = 3
+
+[variables]
+BOT_TOKEN = "{{BOT_TOKEN}}"
+GEMINI_API_KEY = "{{GEMINI_API_KEY}}"
+PORT = "8000"
+ENVIRONMENT = "production"
+RAILWAY_ENVIRONMENT = "production"  # اضافه شده - برای تشخیص بهتر Railway
